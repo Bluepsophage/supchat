@@ -1,15 +1,11 @@
 package fr.supinternet.chat.factory.json;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.ResponseCode;
-import fr.supinternet.chat.model.User;
 
 public class ResponseJSONFactory {
 	
@@ -28,7 +24,7 @@ private static final String TAG = "TokenJsonFactory";
 		return result;
 	}
 	
-	public static User parseFromJSONObject(JSONObject json) throws JSONException{
+	public static Response parseFromJSONObject(JSONObject json) throws JSONException{
 		
 		if (json == null){
 			Log.e(TAG, "Unable to create Response from Json caused by json null");

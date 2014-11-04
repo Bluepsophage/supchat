@@ -6,14 +6,16 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
+import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.request.CreateUserRequest;
 
 public class RequestManager {
+	
+	private static final String TAG = "RequestManager";
 	
 	/**
 	 * The unique instance of the manager.
