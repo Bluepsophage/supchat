@@ -24,38 +24,38 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" android:name=".application.SupChatApplication">
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+<!--         <meta-data -->
+<!--             android:name="com.google.android.gms.version" -->
+<!--             android:value="@integer/google_play_services_version" /> -->
 
         <activity
             android:name="fr.supinternet.chat.activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CreateAccountActivity"
             android:screenOrientation="portrait" >
         </activity>
 
-        <receiver
-            android:name=".GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+<!--         <receiver -->
+<!--             ANDROID:NAME=".GCMBROADCASTRECEIVER" -->
+<!--             ANDROID:PERMISSION="COM.GOOGLE.ANDROID.C2DM.PERMISSION.SEND" > -->
+<!--             <INTENT-FILTER> -->
+<!--                 <ACTION ANDROID:NAME="COM.GOOGLE.ANDROID.C2DM.INTENT.RECEIVE" /> -->
 
-                <category android:name="fr.supinternet.chat" />
-            </intent-filter>
-        </receiver>
+<!--                 <CATEGORY ANDROID:NAME="FR.SUPINTERNET.CHAT" /> -->
+<!--             </INTENT-FILTER> -->
+<!--         </RECEIVER> -->
 
-        <service android:name=".GcmIntentService" />
+<!--         <service android:name=".GcmIntentService" /> -->
 
         <activity android:name=".activity.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

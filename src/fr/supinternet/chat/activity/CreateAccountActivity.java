@@ -19,6 +19,7 @@ import fr.supinternet.chat.R;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.User;
+import fr.supinternet.chat.util.CryptoUtils;
 
 public class CreateAccountActivity extends Activity{
 	
@@ -47,23 +48,11 @@ public class CreateAccountActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				User user = new User();
-				try {
-					RequestManager.getInstance(CreateAccountActivity.this).createUser(user, new Listener<Response>() {
-
-						@Override
-						public void onResponse(Response arg0) {
-							
-						}
-					}, new ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError arg0) {
-							
-						}
-					});
-				} catch (JSONException e) {
-					Log.e(TAG, "Error executing request " + e.getMessage(), e);
+				if (checkFields()){
+					User user = fillValues();
+					createUser(user);
+				}else{
+					
 				}
 			}
 		});
@@ -76,6 +65,48 @@ public class CreateAccountActivity extends Activity{
 				goToLoginActvity();
 			}
 		});
+	}
+	
+	private void createUser(User user){
+		try {
+			RequestManager.getInstance(CreateAccountActivity.this).createUser(user, new Listener<Response>() {
+
+				@Override
+				public void onResponse(Response response) {
+					Log.i(TAG, "respone " + response);
+				}
+			}, new ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					Log.i(TAG, "Error during the request");
+				}
+			});
+		} catch (JSONException e) {
+			Log.e(TAG, "Error executing request " + e.getMessage(), e);
+		}
+	}
+
+	protected User fillValues() {
+		User user = new User();
+		user.setUserPseudo(userNameEdit.getText().toString());
+		user.setUserHash(CryptoUtils.getHash(passwordEdit.getText().toString()));
+		return user;
+	}
+
+	protected boolean checkFields() {
+		String userName = userNameEdit.getText().toString();
+		String password = passwordEdit.getText().toString();
+		
+		if (userName == null || userName.length() == 0){
+			return false;
+		}
+		
+		if (password == null || password.length() == 0){
+			return false;
+		}
+		
+		return true;
 	}
 
 	private void goToLoginActvity() {
