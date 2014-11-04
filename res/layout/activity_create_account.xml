@@ -43,7 +43,7 @@
             android:text="@string/activity_create_account_validate" />
 
         <Button
-            android:id="@+id/activity_create_account_go_to_create"
+            android:id="@+id/activity_create_account_go_to_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
