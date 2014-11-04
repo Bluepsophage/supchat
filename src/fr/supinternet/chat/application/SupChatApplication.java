@@ -8,11 +8,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 public class SupChatApplication extends Application{
-	
+
 	private static final String TAG = "SupChatApplication";
-	
+
 	private RequestQueue mRequestQueue;
-	
+
+	private static SupChatApplication mInstance;
+
+	@Override
+	public void onCreate(){
+		mInstance = this;
+	}
+
+	public static synchronized SupChatApplication getInstance() {
+		return mInstance;
+	}
+
 	public RequestQueue getRequestQueue() {
 		if (mRequestQueue == null) {
 			mRequestQueue = Volley.newRequestQueue(getApplicationContext());

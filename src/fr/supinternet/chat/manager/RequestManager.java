@@ -15,6 +15,8 @@ public class RequestManager {
 	private static final Object __synchronizedObject = new Object();
 
 	private Context context;
+	
+	private static int requestId = -1;
 
 	public static RequestManager getInstance(Context context) {
 
@@ -30,6 +32,10 @@ public class RequestManager {
 
 	private RequestManager(Context context) {
 		this.context = context;
+	}
+	
+	public static int getRequestId(){
+		return requestId++;
 	}
 
 }
