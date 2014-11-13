@@ -113,5 +113,14 @@ public class CreateAccountActivity extends Activity{
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
+	
+	private class ResponseListener implements Listener<Response>{
+
+		@Override
+		public void onResponse(Response arg0) {
+			
+		}
+		
+	}
 
 }
