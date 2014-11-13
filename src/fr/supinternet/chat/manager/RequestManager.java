@@ -75,13 +75,13 @@ public class RequestManager {
 		request.start();
 	}
 
-	public void login(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
+	public void login(User user, final Listener<TokenResponse> listener, ErrorListener errorListener) throws JSONException {
 
 		LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
 			@Override
 			public void onResponse(JSONObject jsonResponse) {
-				Response response = null;
+				TokenResponse response = null;
 				try {
 					response = storeToken(jsonResponse);
 				} catch (JSONException e) {

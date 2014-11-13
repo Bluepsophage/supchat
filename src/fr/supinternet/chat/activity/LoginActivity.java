@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import fr.supinternet.chat.R;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.Response;
+import fr.supinternet.chat.model.TokenResponse;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.util.CryptoUtils;
 
@@ -74,17 +76,17 @@ public class LoginActivity extends Activity {
 	
 	private void login(User user){
 		try {
-			RequestManager.getInstance(this).login(user, new Listener<Response>() {
+			RequestManager.getInstance(this).login(user, new Listener<TokenResponse>() {
 
 				@Override
-				public void onResponse(Response response) {
-					Log.i(TAG, "respone " + response);
+				public void onResponse(TokenResponse response) {
+					Log.i(TAG, "response " + response);
 				}
 			}, new ErrorListener() {
 
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					Log.i(TAG, "Error during the request");
+					Toast.makeText(LoginActivity.this, R.string.activity_login_error_network, Toast.LENGTH_SHORT).show();
 				}
 			});
 		} catch (JSONException e) {
