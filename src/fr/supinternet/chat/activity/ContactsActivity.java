@@ -18,7 +18,6 @@ public class ContactsActivity extends Activity{
 
 	private void initViews() {
 		listView = (PullToRefreshListView) findViewById(R.id.activity_contacts_list);
-		listView.setA
 	}
 
 }

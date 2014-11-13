@@ -9,7 +9,9 @@ import android.util.Log;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
+import fr.supinternet.chat.factory.json.ContactsResponseJSONFactory;
 import fr.supinternet.chat.factory.json.TokenResponseJSONFactory;
+import fr.supinternet.chat.model.ContactsResponse;
 import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.Token;
 import fr.supinternet.chat.model.TokenResponse;
@@ -104,7 +106,7 @@ public class RequestManager {
 		return response;
 	}
 	
-	public void retrieveContacts(final Listener<TokenResponse> listener, ErrorListener errorListener) throws JSONException {
+	public void retrieveContacts(final Listener<ContactsResponse> listener, ErrorListener errorListener) throws JSONException {
 
 		Token token = new Token();
 		token.setTokenValue(AuthenticationManager.getInstance(context).getToken());
@@ -112,9 +114,9 @@ public class RequestManager {
 
 			@Override
 			public void onResponse(JSONObject jsonResponse) {
-				TokenResponse response = null;
+				ContactsResponse response = null;
 				try {
-					response = storeToken(jsonResponse);
+					response = ContactsResponseJSONFactory.parseFromJSONObject(jsonResponse);
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing create user response", e);
 				}
