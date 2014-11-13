@@ -81,6 +81,7 @@ public class LoginActivity extends Activity {
 				@Override
 				public void onResponse(TokenResponse response) {
 					Log.i(TAG, "response " + response);
+					goToContactsActivity();
 				}
 			}, new ErrorListener() {
 
@@ -114,6 +115,14 @@ public class LoginActivity extends Activity {
 		}
 		
 		return true;
+	}
+	
+	private void goToContactsActivity(){
+		Intent intent = new Intent(this, ContactsActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
 	}
 
 }

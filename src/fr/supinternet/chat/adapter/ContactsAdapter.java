@@ -54,12 +54,12 @@ public class ContactsAdapter extends BaseAdapter{
 	
 	@Override
 	public int getCount() {
-		return (users != null ? 0 : users.size());
+		return (users == null ? 0 : users.size());
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return (users != null ? null : users.get(position));
+		return (users == null ? null : users.get(position));
 	}
 
 	@Override

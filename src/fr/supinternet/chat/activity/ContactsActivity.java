@@ -2,6 +2,7 @@ package fr.supinternet.chat.activity;
 
 import eu.erikw.PullToRefreshListView;
 import fr.supinternet.chat.R;
+import fr.supinternet.chat.adapter.ContactsAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -18,6 +19,9 @@ public class ContactsActivity extends Activity{
 
 	private void initViews() {
 		listView = (PullToRefreshListView) findViewById(R.id.activity_contacts_list);
+		ContactsAdapter adapter = new ContactsAdapter(this);
+		listView.setAdapter(adapter);
+		adapter.loadData();
 	}
 
 }
