@@ -9,7 +9,9 @@ import android.util.Log;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
+import fr.supinternet.chat.factory.json.TokenResponseJSONFactory;
 import fr.supinternet.chat.model.Response;
+import fr.supinternet.chat.model.TokenResponse;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.request.CreateUserRequest;
 import fr.supinternet.chat.request.LoginRequest;
@@ -60,7 +62,7 @@ public class RequestManager {
 			public void onResponse(JSONObject arg0) {
 				Response response = null;
 				try {
-					response = Response.parseFromJSONObject(arg0);
+					response = storeToken(arg0);
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing create user response", e);
 				}
@@ -78,10 +80,10 @@ public class RequestManager {
 		LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
 			@Override
-			public void onResponse(JSONObject arg0) {
+			public void onResponse(JSONObject jsonResponse) {
 				Response response = null;
 				try {
-					response = Response.parseFromJSONObject(arg0);
+					response = storeToken(jsonResponse);
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing create user response", e);
 				}
@@ -92,6 +94,12 @@ public class RequestManager {
 			}
 		}, errorListener);
 		request.start();
+	}
+
+	protected TokenResponse storeToken(JSONObject arg0) throws JSONException {
+		TokenResponse response = TokenResponseJSONFactory.parseFromJSONObject(arg0);
+		AuthenticationManager.getInstance(context).setToken(response.getToken());
+		return response;
 	}
 
 }
