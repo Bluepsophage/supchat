@@ -114,13 +114,4 @@ public class CreateAccountActivity extends Activity{
 		startActivity(intent);
 	}
 	
-	private class ResponseListener implements Listener<Response>{
-
-		@Override
-		public void onResponse(Response arg0) {
-			
-		}
-		
-	}
-
 }

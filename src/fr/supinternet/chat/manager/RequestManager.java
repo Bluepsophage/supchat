@@ -12,11 +12,12 @@ import com.android.volley.Response.Listener;
 import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.request.CreateUserRequest;
+import fr.supinternet.chat.request.LoginRequest;
 
 public class RequestManager {
-	
+
 	private static final String TAG = "RequestManager";
-	
+
 	/**
 	 * The unique instance of the manager.
 	 */
@@ -28,7 +29,7 @@ public class RequestManager {
 	private static final Object __synchronizedObject = new Object();
 
 	private Context context;
-	
+
 	private static int requestId = -1;
 
 	public static RequestManager getInstance(Context context) {
@@ -46,14 +47,35 @@ public class RequestManager {
 	private RequestManager(Context context) {
 		this.context = context;
 	}
-	
+
 	public static int getRequestId(){
 		return requestId++;
 	}
-	
+
 	public void createUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
-		
+
 		CreateUserRequest request = new CreateUserRequest(context, user, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject arg0) {
+				Response response = null;
+				try {
+					response = Response.parseFromJSONObject(arg0);
+				} catch (JSONException e) {
+					Log.e(TAG, "An error occurred parsing create user response", e);
+				}
+
+				if (listener != null){
+					listener.onResponse(response);
+				}
+			}
+		}, errorListener);
+		request.start();
+	}
+
+	public void login(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
+
+		LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
 			@Override
 			public void onResponse(JSONObject arg0) {
