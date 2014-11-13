@@ -67,6 +67,7 @@ public class RequestManager {
 				Response response = null;
 				try {
 					response = storeToken(arg0);
+					storeCredentials(user.getUserPseudo(), user.getUserHash());
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing create user response", e);
 				}
@@ -79,7 +80,7 @@ public class RequestManager {
 		request.start();
 	}
 
-	public void login(User user, final Listener<TokenResponse> listener, ErrorListener errorListener) throws JSONException {
+	public void login(final User user, final Listener<TokenResponse> listener, ErrorListener errorListener) throws JSONException {
 
 		LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
@@ -88,6 +89,7 @@ public class RequestManager {
 				TokenResponse response = null;
 				try {
 					response = storeToken(jsonResponse);
+					storeCredentials(user.getUserPseudo(), user.getUserHash());
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing create user response", e);
 				}
@@ -98,6 +100,11 @@ public class RequestManager {
 			}
 		}, errorListener);
 		request.start();
+	}
+	
+	private void storeCredentials(String pseudo, String hash){
+		AuthenticationManager.getInstance(context).setPseudo(pseudo);
+		AuthenticationManager.getInstance(context).setHash(hash);
 	}
 
 	protected TokenResponse storeToken(JSONObject arg0) throws JSONException {
