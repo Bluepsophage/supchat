@@ -22,6 +22,10 @@
     <!-- Chats -->
     <string name="activity_chat_menu_add">Add</string>
     
+    <!-- Create Chat -->
+    <string name="activity_create_chat_no_name_error">Please enter a name</string>
+    <string name="activity_create_chat_no_users_error">Select at list one user</string>
+    
 	<string name="menu_validate">Ok</string>
     
 </resources>

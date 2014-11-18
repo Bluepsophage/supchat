@@ -1,5 +1,7 @@
 package fr.supinternet.chat.fragment;
 
+import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 import fr.supinternet.chat.R;
 import fr.supinternet.chat.adapter.ContactsAdapter;
+import fr.supinternet.chat.model.User;
 
 public class ContactsFragment extends Fragment{
 	
@@ -20,6 +22,8 @@ public class ContactsFragment extends Fragment{
 	
 	private boolean selectable;
 	private ContactsAdapter adapter;
+	
+	private ArrayList<User> usersSelected = new ArrayList<User>();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +46,16 @@ public class ContactsFragment extends Fragment{
 				adapter.loadData();
 			}
 		});
-		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long itemId) {
+				view.setSelected(true);
+				view.setActivated(false);
+				usersSelected.add((User) adapter.getItem(position));
+			}
+		});
 	}
 	
 	public void dataLoaded(){
@@ -58,9 +71,14 @@ public class ContactsFragment extends Fragment{
 	public void setSelectable(boolean selectable) {
 		this.selectable = selectable;
 		adapter.setSelectable(selectable);
-		if (selectable){
-//			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		}
+	}
+
+	public ArrayList<User> getUsersSelected() {
+		return usersSelected;
+	}
+
+	public void setUsersSelected(ArrayList<User> usersSelected) {
+		this.usersSelected = usersSelected;
 	}
 
 }
