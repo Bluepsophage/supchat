@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 
 import fr.supinternet.chat.R;
-import fr.supinternet.chat.activity.ContactsActivity;
+import fr.supinternet.chat.fragment.ContactsFragment;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.ContactsResponse;
 import fr.supinternet.chat.model.User;
@@ -27,12 +26,12 @@ public class ContactsAdapter extends BaseAdapter{
 	
 	private LayoutInflater inflater;
 	private RequestManager manager;
-	private ContactsActivity activity;
+	private ContactsFragment fragment;
 	
-	public ContactsAdapter(ContactsActivity activity) {
-		inflater = LayoutInflater.from(activity);
-		manager = RequestManager.getInstance(activity);
-		this.activity = activity;
+	public ContactsAdapter(ContactsFragment fragment) {
+		inflater = LayoutInflater.from(fragment.getActivity());
+		manager = RequestManager.getInstance(fragment.getActivity());
+		this.fragment = fragment;
 	}
 	
 	public void loadData(){
@@ -43,7 +42,7 @@ public class ContactsAdapter extends BaseAdapter{
 				public void onResponse(ContactsResponse response) {
 					users = response.getUsers();
 					notifyDataSetChanged();
-					activity.dataLoaded();
+					fragment.dataLoaded();
 				}
 			}, new ErrorListener() {
 
