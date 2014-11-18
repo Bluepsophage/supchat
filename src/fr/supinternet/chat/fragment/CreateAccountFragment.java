@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -22,6 +23,7 @@ import fr.supinternet.chat.activity.ContactsActivity;
 import fr.supinternet.chat.activity.LoginActivity;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.Response;
+import fr.supinternet.chat.model.ResponseCode;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.util.CryptoUtils;
 
@@ -58,8 +60,6 @@ public class CreateAccountFragment extends Fragment{
 				if (checkFields()){
 					User user = fillValues();
 					createUser(user);
-				}else{
-					
 				}
 			}
 		});
@@ -81,7 +81,11 @@ public class CreateAccountFragment extends Fragment{
 				@Override
 				public void onResponse(Response response) {
 					Log.i(TAG, "response " + response);
-					goToContactsActivity();
+					if (response != null && response.getCode() == ResponseCode.OK){
+						goToContactsActivity();
+					}else{
+						Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+					}
 				}
 			}, new ErrorListener() {
 

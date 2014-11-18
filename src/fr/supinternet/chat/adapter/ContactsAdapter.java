@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import fr.supinternet.chat.model.ContactsResponse;
 import fr.supinternet.chat.model.User;
 
 public class ContactsAdapter extends BaseAdapter{
+	
+	private static final String TAG = "ContactsAdapter";
 	
 	private ArrayList<User> users;
 	
@@ -40,7 +43,11 @@ public class ContactsAdapter extends BaseAdapter{
 
 				@Override
 				public void onResponse(ContactsResponse response) {
-					users = response.getUsers();
+					if (response != null){
+						users = response.getUsers();
+					}else{
+						Log.e(TAG, "Response null for retrieve contacts");
+					}
 					notifyDataSetChanged();
 					fragment.dataLoaded();
 				}
