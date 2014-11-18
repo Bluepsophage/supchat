@@ -22,6 +22,7 @@ import fr.supinternet.chat.R;
 import fr.supinternet.chat.activity.ContactsActivity;
 import fr.supinternet.chat.activity.CreateAccountActivity;
 import fr.supinternet.chat.manager.RequestManager;
+import fr.supinternet.chat.model.ResponseCode;
 import fr.supinternet.chat.model.TokenResponse;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.util.CryptoUtils;
@@ -87,7 +88,11 @@ public class LoginFragment extends Fragment{
 				@Override
 				public void onResponse(TokenResponse response) {
 					Log.i(TAG, "response " + response);
-					goToContactsActivity();
+					if (response != null && response.getCode() == ResponseCode.OK){
+						goToContactsActivity();
+					}else{
+						Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+					}
 				}
 			}, new ErrorListener() {
 
