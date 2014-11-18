@@ -19,7 +19,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 
 import fr.supinternet.chat.R;
-import fr.supinternet.chat.activity.ContactsActivity;
+import fr.supinternet.chat.activity.ChatsActivity;
 import fr.supinternet.chat.activity.LoginActivity;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.Response;
@@ -82,7 +82,7 @@ public class CreateAccountFragment extends Fragment{
 				public void onResponse(Response response) {
 					Log.i(TAG, "response " + response);
 					if (response != null && response.getCode() == ResponseCode.OK){
-						goToContactsActivity();
+						goToChatsActivity();
 					}else{
 						Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
 					}
@@ -126,8 +126,8 @@ public class CreateAccountFragment extends Fragment{
 		startActivity(intent);
 	}
 	
-	private void goToContactsActivity(){
-		Intent intent = new Intent(getActivity(), ContactsActivity.class);
+	private void goToChatsActivity(){
+		Intent intent = new Intent(getActivity(), ChatsActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

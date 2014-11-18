@@ -15,7 +15,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-public class MainActivity extends Activity{
+public class PushTestActivity extends Activity{
 	
 	private static final String TAG = "MainActivity";
 	
@@ -87,7 +87,7 @@ public class MainActivity extends Activity{
 	}
 	
 	private SharedPreferences getGCMPreferences(Context context) {
-	    return getSharedPreferences(MainActivity.class.getSimpleName(),
+	    return getSharedPreferences(PushTestActivity.class.getSimpleName(),
 	            Context.MODE_PRIVATE);
 	}
 	
