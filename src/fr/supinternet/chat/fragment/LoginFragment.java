@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import fr.supinternet.chat.R;
 import fr.supinternet.chat.activity.ChatsActivity;
 import fr.supinternet.chat.activity.CreateAccountActivity;
+import fr.supinternet.chat.manager.AuthenticationManager;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.ResponseCode;
 import fr.supinternet.chat.model.TokenResponse;
@@ -79,8 +80,19 @@ public class LoginFragment extends Fragment{
 				goToCreateActvity();
 			}
 		});
+		
+		if (AuthenticationManager.getInstance(getActivity()).hasCredentials()){
+			autoLogin();
+		}
 	}
 	
+	private void autoLogin() {
+		User user = new User();
+		user.setUserHash(AuthenticationManager.getInstance(getActivity()).getHash());
+		user.setUserPseudo(AuthenticationManager.getInstance(getActivity()).getPseudo());
+		login(user);
+	}
+
 	private void login(User user){
 		try {
 			RequestManager.getInstance(getActivity()).login(user, new Listener<TokenResponse>() {
