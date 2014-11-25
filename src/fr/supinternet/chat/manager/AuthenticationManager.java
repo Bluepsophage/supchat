@@ -1,7 +1,7 @@
 package fr.supinternet.chat.manager;
 
-import fr.supinternet.chat.util.PrefsUtils;
 import android.content.Context;
+import fr.supinternet.chat.util.PrefsUtils;
 
 public class AuthenticationManager {
 

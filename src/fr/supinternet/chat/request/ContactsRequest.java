@@ -8,7 +8,11 @@ import android.content.Context;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
+<<<<<<< HEAD
 import fr.supinternet.chat.factory.json.TokenJSONFactory;
+=======
+import fr.supinternet.chat.factory.json.TokenJsonFactory;
+>>>>>>> Fork project
 import fr.supinternet.chat.model.Token;
 
 public class ContactsRequest extends AbstractRequest{
