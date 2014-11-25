@@ -49,4 +49,30 @@ public class User {
 				+ userCreationDate + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((userPseudo == null) ? 0 : userPseudo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (userPseudo == null) {
+			if (other.userPseudo != null)
+				return false;
+		} else if (!userPseudo.equals(other.userPseudo))
+			return false;
+		return true;
+	}
+	
 }

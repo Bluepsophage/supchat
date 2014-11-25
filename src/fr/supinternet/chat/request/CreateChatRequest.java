@@ -8,7 +8,7 @@ import android.content.Context;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
-import fr.supinternet.chat.factory.json.ChatRequestFactory;
+import fr.supinternet.chat.factory.json.ChatDataJSONFactory;
 import fr.supinternet.chat.manager.AuthenticationManager;
 import fr.supinternet.chat.model.ChatData;
 
@@ -30,7 +30,7 @@ public class CreateChatRequest extends AbstractRequest{
 
 	private static JSONObject constructJSONObject(ChatData data) throws JSONException{
 		data.setToken(AuthenticationManager.getInstance(mContext).getToken());
-		JSONObject json = ChatRequestFactory.getJSONObject(data);
+		JSONObject json = ChatDataJSONFactory.getJSONObject(data);
 		return json;
 	}
 
