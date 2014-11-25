@@ -56,6 +56,7 @@ public class ContactsFragment extends Fragment{
 				usersSelected.add((User) adapter.getItem(position));
 			}
 		});
+		
 	}
 	
 	public void dataLoaded(){
