@@ -10,7 +10,9 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
 import fr.supinternet.chat.factory.json.ContactsResponseJSONFactory;
+import fr.supinternet.chat.factory.json.ResponseJSONFactory;
 import fr.supinternet.chat.factory.json.TokenResponseJSONFactory;
+import fr.supinternet.chat.model.ChatData;
 import fr.supinternet.chat.model.ContactsResponse;
 import fr.supinternet.chat.model.Response;
 import fr.supinternet.chat.model.ResponseCode;
@@ -18,6 +20,7 @@ import fr.supinternet.chat.model.Token;
 import fr.supinternet.chat.model.TokenResponse;
 import fr.supinternet.chat.model.User;
 import fr.supinternet.chat.request.ContactsRequest;
+import fr.supinternet.chat.request.CreateChatRequest;
 import fr.supinternet.chat.request.CreateUserRequest;
 import fr.supinternet.chat.request.LoginRequest;
 
@@ -140,6 +143,30 @@ public class RequestManager {
 							}
 							
 						}, errorListener);
+					}
+					
+				} catch (JSONException e) {
+					Log.e(TAG, "An error occurred parsing create user response", e);
+				}
+
+				if (listener != null){
+					listener.onResponse(response);
+				}
+			}
+		}, errorListener);
+		request.start();
+	}
+	
+	public void createChat(final ChatData data, final Listener<Response> listener, final ErrorListener errorListener) throws JSONException {
+
+		CreateChatRequest request = new CreateChatRequest(context, data, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject json) {
+				Response response = null;
+				try {
+					response = ResponseJSONFactory.parseFromJSONObject(json);
+					if (response == null || response.getCode().equals(ResponseCode.TOKEN_INVALID)){
 					}
 					
 				} catch (JSONException e) {

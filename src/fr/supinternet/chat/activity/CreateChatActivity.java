@@ -2,19 +2,34 @@ package fr.supinternet.chat.activity;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+
 import fr.supinternet.chat.R;
 import fr.supinternet.chat.fragment.ContactsFragment;
+import fr.supinternet.chat.manager.RequestManager;
+import fr.supinternet.chat.model.Chat;
+import fr.supinternet.chat.model.ChatData;
+import fr.supinternet.chat.model.Response;
+import fr.supinternet.chat.model.ResponseCode;
 import fr.supinternet.chat.model.User;
 
 public class CreateChatActivity extends Activity{
+	
+	private static final String TAG = "CreateChatActivity";
 	
 	private ContactsFragment fragment;
 	private EditText nameEdit;
@@ -56,9 +71,38 @@ public class CreateChatActivity extends Activity{
 				return true;
 			}
 			// Create chat
+			ChatData data = new ChatData();
+			data.setChat(createChat());
+			data.setUsers(fragment.getUsersSelected());
+			try {
+				RequestManager.getInstance(this).createChat(data, new Listener<Response>() {
+
+					@Override
+					public void onResponse(Response response) {
+						if (response.getCode() == ResponseCode.OK){
+							onBackPressed();
+						}
+						Toast.makeText(CreateChatActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						
+					}
+				});
+			} catch (JSONException e) {
+				Log.e(TAG, "Error executing the request");
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private Chat createChat() {
+		Chat  chat = new Chat();
+		chat.setChatName(nameEdit.getText().toString());
+		return chat;
 	}
 
 	private boolean checkUserList() {
