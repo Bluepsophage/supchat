@@ -167,21 +167,24 @@ public class RequestManager {
 
 				try {
 					response = ChatsResponseJSONFactory.parseFromJSONObject(jsonResponse);
-					autoLogin(new Listener<TokenResponse>(){
+					if (response == null || response.getCode().equals(ResponseCode.TOKEN_INVALID)){
+						autoLogin(new Listener<TokenResponse>(){
 
-						@Override
-						public void onResponse(TokenResponse response) {
-							if (response != null && response.getCode().equals(ResponseCode.OK)){
-								try {
-									retrieveChats(listener, errorListener);
-								} catch (JSONException e) {
+							@Override
+							public void onResponse(TokenResponse response) {
+								if (response != null && response.getCode().equals(ResponseCode.OK)){
+									try {
+										retrieveChats(listener, errorListener);
+									} catch (JSONException e) {
+									}
+								}else{
+									goToLoginActivity();
 								}
-							}else{
-								goToLoginActivity();
 							}
-						}
 
-					}, errorListener);
+						}, errorListener);
+					}
+					
 				} catch (JSONException e) {
 					Log.e(TAG, "An error occurred parsing list chat response", e);
 				}
