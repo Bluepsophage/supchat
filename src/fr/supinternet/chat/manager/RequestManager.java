@@ -23,6 +23,7 @@ import fr.supinternet.chat.model.ResponseCode;
 import fr.supinternet.chat.model.Token;
 import fr.supinternet.chat.model.TokenResponse;
 import fr.supinternet.chat.model.User;
+import fr.supinternet.chat.request.ChatUsersRequest;
 import fr.supinternet.chat.request.ChatsRequest;
 import fr.supinternet.chat.request.ContactsRequest;
 import fr.supinternet.chat.request.CreateChatRequest;
@@ -153,6 +154,49 @@ public class RequestManager {
 		}, errorListener);
 		request.start();
 	}
+	
+	public void retrieveChatUsers(long chatID, final Listener<ContactsResponse> listener, final ErrorListener errorListener) throws JSONException {
+
+		Token token = new Token();
+		token.setTokenValue(AuthenticationManager.getInstance(context).getToken());
+		ChatUsersRequest request = new ChatUsersRequest(context, token, chatID, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject jsonResponse) {
+				ContactsResponse response = null;
+				Log.i(TAG, "response " + jsonResponse);
+				try {
+					response = ContactsResponseJSONFactory.parseFromJSONObject(jsonResponse);
+
+					if (response == null || response.getCode().equals(ResponseCode.TOKEN_INVALID)){
+						autoLogin(new Listener<TokenResponse>(){
+
+							@Override
+							public void onResponse(TokenResponse response) {
+								if (response != null && response.getCode().equals(ResponseCode.OK)){
+									try {
+										retrieveContacts(listener, errorListener);
+									} catch (JSONException e) {
+									}
+								}else{
+									goToLoginActivity();
+								}
+							}
+
+						}, errorListener);
+					}
+
+				} catch (JSONException e) {
+					Log.e(TAG, "An error occurred parsing create user response", e);
+				}
+
+				if (listener != null){
+					listener.onResponse(response);
+				}
+			}
+		}, errorListener);
+		request.start();
+	}
 
 	public void retrieveChats(final Listener<ChatsResponse> listener, final ErrorListener errorListener) throws JSONException {
 
@@ -206,6 +250,7 @@ public class RequestManager {
 				Response response = null;
 				try {
 					response = ResponseJSONFactory.parseFromJSONObject(json);
+					
 					if (response == null || response.getCode().equals(ResponseCode.TOKEN_INVALID)){
 
 						autoLogin(new Listener<TokenResponse>(){
@@ -238,10 +283,14 @@ public class RequestManager {
 	}
 
 	private void autoLogin(final Listener<TokenResponse> listener, final ErrorListener errorListener) throws JSONException{
+		
 		final User user = new User();
+		
 		user.setUserPseudo(AuthenticationManager.getInstance(context).getPseudo());
 		user.setUserHash(AuthenticationManager.getInstance(context).getHash());
+		
 		Log.i(TAG, "user sent " + user);
+		
 		LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
 			@Override

@@ -14,7 +14,7 @@ import fr.supinternet.chat.manager.RequestManager;
 
 public class AbstractRequest extends JsonObjectRequest{
 
-	public static final String SERVER_URL = "http://serv.makki.us:11223/Chat/";
+	public static final String SERVER_URL = "http://ws.teezermessenger.com:4123/Chat/";
 
 	protected static Context mContext;
 

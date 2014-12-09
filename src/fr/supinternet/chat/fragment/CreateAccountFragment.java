@@ -91,7 +91,7 @@ public class CreateAccountFragment extends Fragment{
 
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					Log.i(TAG, "Error during the request");
+					Log.i(TAG, "Error during the request " + error);
 				}
 			});
 		} catch (JSONException e) {

@@ -20,6 +20,8 @@ import fr.supinternet.chat.fragment.ChatsFragment;
 import fr.supinternet.chat.manager.RequestManager;
 import fr.supinternet.chat.model.Chat;
 import fr.supinternet.chat.model.ChatsResponse;
+import fr.supinternet.chat.model.ContactsResponse;
+import fr.supinternet.chat.model.User;
 
 public class ChatsAdapter extends BaseAdapter{
 	
@@ -87,7 +89,7 @@ public class ChatsAdapter extends BaseAdapter{
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		
-		ViewHolder holder;
+		final ViewHolder holder;
 		if (convertView == null){
 			holder = new ViewHolder();
 			if (selectable){
@@ -102,10 +104,42 @@ public class ChatsAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		Chat chat = (Chat) getItem(position);
+		final Chat chat = (Chat) getItem(position);
+		
 		holder.pseudo.setText(chat.getChatName());
 		
+		try {
+			manager.retrieveChatUsers(chat.getChatID(), new Listener<ContactsResponse>(){
+
+				@Override
+				public void onResponse(ContactsResponse arg0) {
+					holder.pseudo.setText(chat.getChatName() + " : " + constructUsersList(arg0));
+				}
+				
+			}, new ErrorListener(){
+
+				@Override
+				public void onErrorResponse(VolleyError arg0) {
+					holder.pseudo.setText(chat.getChatName() + " : unable to retrieve users");
+				}
+				
+			});
+		} catch (JSONException e) {
+			Log.e(TAG, "Unable to retrieve users", e);
+		}
+		
 		return convertView;
+	}
+
+	protected String constructUsersList(ContactsResponse response) {
+		StringBuilder builder = new StringBuilder();
+		if (response != null && response.getUsers() != null){
+			for (User u : response.getUsers()){
+				builder.append(u.getUserPseudo());
+				builder.append(" ");
+			}
+		}
+		return builder.toString();
 	}
 
 	public boolean isSelectable() {

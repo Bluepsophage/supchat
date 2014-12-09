@@ -9,6 +9,16 @@ public class User {
 	private String userHash;
 	
 	private Long userCreationDate;
+	
+	private String userPushID;
+	
+	public String getUserPushID() {
+		return userPushID;
+	}
+
+	public void setUserPushID(String userPushID) {
+		this.userPushID = userPushID;
+	}
 
 	public Long getUserID() {
 		return userID;

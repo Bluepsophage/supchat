@@ -21,6 +21,7 @@ public class UserJSONFactory {
 		}
 		
 		JSONObject result = new JSONObject();
+		result.accumulate("userPushID", u.getUserPushID());
 		result.accumulate("userID", u.getUserID());
 		result.accumulate("userPseudo", u.getUserPseudo());
 		result.accumulate("userHash", u.getUserHash());
