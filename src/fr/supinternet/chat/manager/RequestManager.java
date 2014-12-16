@@ -155,7 +155,7 @@ public class RequestManager {
 		request.start();
 	}
 	
-	public void retrieveChatUsers(long chatID, final Listener<ContactsResponse> listener, final ErrorListener errorListener) throws JSONException {
+	public void retrieveChatUsers(final long chatID, final Listener<ContactsResponse> listener, final ErrorListener errorListener) throws JSONException {
 
 		Token token = new Token();
 		token.setTokenValue(AuthenticationManager.getInstance(context).getToken());
@@ -175,7 +175,7 @@ public class RequestManager {
 							public void onResponse(TokenResponse response) {
 								if (response != null && response.getCode().equals(ResponseCode.OK)){
 									try {
-										retrieveContacts(listener, errorListener);
+										retrieveChatUsers(chatID, listener, errorListener);
 									} catch (JSONException e) {
 									}
 								}else{

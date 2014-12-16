@@ -108,6 +108,8 @@ public class ChatsAdapter extends BaseAdapter{
 		
 		holder.pseudo.setText(chat.getChatName());
 		
+		
+		
 		try {
 			manager.retrieveChatUsers(chat.getChatID(), new Listener<ContactsResponse>(){
 
@@ -127,7 +129,6 @@ public class ChatsAdapter extends BaseAdapter{
 		} catch (JSONException e) {
 			Log.e(TAG, "Unable to retrieve users", e);
 		}
-		
 		return convertView;
 	}
 

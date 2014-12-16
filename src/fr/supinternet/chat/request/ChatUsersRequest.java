@@ -14,6 +14,8 @@ import fr.supinternet.chat.model.Token;
 public class ChatUsersRequest extends AbstractRequest{
 
 	private static final String LOGIN = "list_user_for_chat";
+	
+	// TODO check values
 
 	public ChatUsersRequest(Context context, int method, Token data, long chatID, Listener<JSONObject> listener, ErrorListener errorListener) throws JSONException {
 		super(context, method, constructUrl(chatID), constructJSONObject(data), listener, errorListener);

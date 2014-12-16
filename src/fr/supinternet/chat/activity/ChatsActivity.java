@@ -119,7 +119,7 @@ public class ChatsActivity extends Activity{
 	}
 	
 	private SharedPreferences getGCMPreferences(Context context) {
-	    return getSharedPreferences(PushTestActivity.class.getSimpleName(),
+	    return getSharedPreferences(ChatsActivity.class.getSimpleName(),
 	            Context.MODE_PRIVATE);
 	}
 	
@@ -140,11 +140,15 @@ public class ChatsActivity extends Activity{
 	    checkPlayServices();
 	}
 	
+	
 	private void registerInBackground() {
-	    new AsyncTask<Void, Void, Void>() {
+		
+	    new AsyncTask<Void, Integer, Boolean>() {
+	    	
+	    	
 
 			@Override
-			protected Void doInBackground(Void... params) {
+			protected Boolean doInBackground(Void... params) {
 	            try {
 	                if (gcm == null) {
 	                    gcm = GoogleCloudMessaging.getInstance(context);
